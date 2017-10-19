@@ -1,0 +1,5 @@
+.vs/*
+!.vs/settings.json
+!.vs/tasks.json
+!.vs/launch.json
+!.vs/extensions.json
