@@ -4,3 +4,4 @@
 !.vs/launch.json
 !.vs/extensions.json
 venv
+__pycache__

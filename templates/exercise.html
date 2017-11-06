@@ -5,15 +5,36 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
     <title>Document</title>
+    <script>
+
+      function evaluateExercise() {
+        var questions = $(".question")
+        
+        questions.each(function(index) {
+          var question = $(this);
+          var proposition = question.find(".proposition").val();
+          var answer = question.find(".answer").val();
+          var result = "wrong";
+
+          if (proposition == answer) {
+            result = "correct";
+          }
+
+          question.find(".result").html(result);
+        });
+      }
+    </script>
 </head>
 <body>
-    <form action="/evaluate-exercise">
-        {% for expression in exercise.expressions %}
-            <div>
-                <span>{{ expression }} = </span>
-                <input type="number" name="{{ expression.id }}" />
-            </div>
-        {% endfor %}
-    </form>
+  {% for question in exercise.questions %}
+    <div class="question">
+      <span>{{ question.expression }} = </span>
+      <input type="text" name="{{ question.id }}" class="proposition" />
+      <input type="hidden" value="{{ question.answer }}" class="answer" />
+      <span class="result"></span>
+    </div>
+  {% endfor %}
+  <button id="submit" onclick="evaluateExercise()">Submit</button>
+  <script src="https://code.jquery.com/jquery-3.2.1.min.js"></script>
 </body>
 </html>

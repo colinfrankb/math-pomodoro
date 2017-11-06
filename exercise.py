@@ -5,15 +5,17 @@ class SubtractionExerciseFactory:
         subtraction_exercise = Exercise()
 
         for id in range(0, 10):
-            expression = Expression(
+            expression = self._generate_expression()
+            question = Question(
                 id=id,
-                body=self._generate_expression_body()
+                expression=expression,
+                answer=eval(expression)
             )
-            subtraction_exercise.expressions.append(expression)
+            subtraction_exercise.questions.append(question)
 
         return subtraction_exercise
 
-    def _generate_expression_body(self):
+    def _generate_expression(self):
         subtractor = random.randrange(200, 1000)
         low_hundred = random.randrange(subtractor)
         subtractee = random.randrange(1,10) * 1000 + low_hundred
@@ -22,15 +24,13 @@ class SubtractionExerciseFactory:
 
 class Exercise:
     def __init__(self):
-        self.expressions = []
+        self.questions = []
 
-class Expression:
-    def __init__(self, id, body):
+class Question:
+    def __init__(self, id, expression, answer):
         self.id = id
-        self.body = body
-
-    def __str__(self):
-        return self.body
+        self.expression = expression
+        self.answer = answer
 
 # thousandth = random.randrange(1, 10) * 1000
 # high_hundredth = random.randrange(2, 10)
