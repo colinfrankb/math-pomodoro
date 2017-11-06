@@ -1,41 +1,19 @@
-#Random Subraction Drills Generator:
+from flask import Flask, render_template, request
 
-#Generate a random subtraction equation in the format of the following example:
+from exercise import SubtractionExerciseFactory
 
-#5487 - 843
+app = Flask(__name__)
 
-#Where the following rules apply.
+@app.route('/')
+def generate_exercise():
+    exercise_factory = SubtractionExerciseFactory()
+    subtraction_exercise = exercise_factory.generate()
+    
+    return render_template('exercise.html', exercise=subtraction_exercise)
 
-#5487 will be known as the subtractee
-#843 will be known as the subtractor
-
-#1. The subtractee is in the thousands, and the subtractor is in the hundreds
-#2. The hundredth of the subtractee must be less than the hundredth of the subtractor
-
-import random
-
-thousandth = random.randrange(1, 10) * 1000
-high_hundredth = random.randrange(2, 10)
-high_hundred = high_hundredth * 100
-low_hundred = random.randrange(1, high_hundredth) * 100
-complete_low_hundred = random.randrange(low_hundred, low_hundred + 100)
-subtractee = thousandth + complete_low_hundred
-subtractor = random.randrange(high_hundred, 1000)
-
-print('Algorithm A', subtractee, '-', subtractor)
-
-subtractor = random.randrange(200, 1000)
-low_hundred = random.randrange(subtractor)
-subtractee = random.randrange(1,10) * 1000 + low_hundred
-
-print('Algorithm B', subtractee, '-', subtractor)
-
-
-
-
-
-
-
-
-
-
+@app.route('/evaluate-exercise')
+def evaluate_exercise():
+    exercise_factory = SubtractionExerciseFactory()
+    subtraction_exercise = exercise_factory.generate()
+    
+    return render_template('exercise.html', exercise=subtraction_exercise)
