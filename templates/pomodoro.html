@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Pomodoro</title>
+
+    <script>
+        var intervalId;
+
+        function startPomodoro() {
+            var countDownInSeconds = 60 * 20;
+            timer = $("#timer");
+
+            intervalId = setInterval(function() {
+                countDownInSeconds--;
+
+                var minutes = Math.floor(countDownInSeconds / 60);
+                var seconds = Math.floor(countDownInSeconds % 60);
+                
+                timer.html(minutes + "m " + seconds + "s ");
+                
+                if (countDownInSeconds == 0) {
+                    clearInterval(intervalId);
+                    if (Notification.permission === "granted") {
+                        var notification = new Notification("Time for a break!");
+                        setTimeout(notification.close.bind(notification), 5000); 
+                    }
+                }
+
+            }, 1000);
+        }
+
+        function stopPomodoro() {
+            clearInterval(intervalId);
+            $("#timer").html("20m 00s");
+        }
+
+        if (Notification.permission === "default") {
+            Notification.requestPermission();
+        }
+        
+    </script>
+</head>
+<body>
+    <div id="timer">20m 00s</div>
+    <button id="start_pomodoro" onclick="startPomodoro()">Start Pomodoro</button>
+    <button id="stop_pomodoro" onclick="stopPomodoro()">Stop Pomodoro</button>
+    <script src="https://code.jquery.com/jquery-3.2.1.min.js"></script>
+</body>
+</html>

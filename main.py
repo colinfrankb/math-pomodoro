@@ -11,9 +11,7 @@ def generate_exercise():
     
     return render_template('exercise.html', exercise=subtraction_exercise)
 
-@app.route('/evaluate-exercise')
+@app.route('/pomodoro')
 def evaluate_exercise():
-    exercise_factory = SubtractionExerciseFactory()
-    subtraction_exercise = exercise_factory.generate()
     
-    return render_template('exercise.html', exercise=subtraction_exercise)
+    return render_template('pomodoro.html')
