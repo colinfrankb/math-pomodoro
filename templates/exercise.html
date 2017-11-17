@@ -5,14 +5,29 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
     <title>Exercise</title>
+    <script src="https://code.jquery.com/jquery-3.2.1.min.js"></script>
     <style>
       .exercise-results.fullmarks {
         background-color: rgb(122, 194, 122);
       }
+
+      .question {
+        margin: 10px 0;        
+      }
     </style>
     <script>
 
+      function loadPreviousExerciseMarks() {
+        for (var i = 0; i < localStorage.length; i++){
+          var exercise_mark_jsonstring = localStorage.getItem(localStorage.key(i));
+          var exercise_mark = JSON.parse(exercise_mark_jsonstring);
+
+          renderExerciseMark(exercise_mark);
+        }
+      }
+
       function evaluateExercise() {
+        var exercise_timestamp = $("[name='exercise_timestamp']").val();
         var questions = $(".question");
         var mark_total = questions.length;
         var mark_correct = 0;
@@ -31,15 +46,31 @@
           question.find(".question-result").html(result);
         });
 
+        var exercise_mark = {
+          "correct": mark_correct,
+          "total": mark_total 
+        };
+
+        renderExerciseMark(exercise_mark);
+
+        localStorage.setItem(exercise_timestamp, JSON.stringify(exercise_mark));
+      }
+
+      function renderExerciseMark(exercise_mark) {
         var result_el = $("<li class=\"exercise-mark\">");
-        result_el.html([ mark_correct, mark_total ].join(" / "));
-        if (mark_correct == mark_total)
+        result_el.html([ exercise_mark["correct"], exercise_mark["total"] ].join(" / "));
+        if (exercise_mark["correct"] == exercise_mark["total"])
         {
           result_el.addClass("fullmarks");
         }
-
         $(".exercise-results").append(result_el);
       }
+
+      $(document).ready(function() {
+        loadPreviousExerciseMarks();
+
+      });
+
     </script>
 </head>
 <body>
@@ -59,6 +90,6 @@
   <ol class="exercise-results">
   </ol>
 
-  <script src="https://code.jquery.com/jquery-3.2.1.min.js"></script>
+  
 </body>
 </html>

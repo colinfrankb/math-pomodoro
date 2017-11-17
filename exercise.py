@@ -5,8 +5,8 @@ class SubtractionExerciseFactory:
     def generate(self):
         subtraction_exercise = Exercise()
 
-        for id in range(0, 10):
-            expression = self._generate_expression()
+        for id in range(10, 40):
+            expression = self._generate_two_digit_expression()
             question = Question(
                 id=id,
                 expression=expression,
@@ -14,12 +14,33 @@ class SubtractionExerciseFactory:
             )
             subtraction_exercise.questions.append(question)
 
+        # for id in range(0, 10):
+        #     expression = self._generate_expression()
+        #     question = Question(
+        #         id=id,
+        #         expression=expression,
+        #         answer=eval(expression)
+        #     )
+        #     subtraction_exercise.questions.append(question)
+
         return subtraction_exercise
 
     def _generate_expression(self):
         subtractor = random.randrange(200, 1000)
         low_hundred = random.randrange(subtractor)
         subtractee = random.randrange(1,10) * 1000 + low_hundred
+
+        return '{0} - {1}'.format(subtractee, subtractor)
+
+    def _generate_two_digit_expression(self):
+        subtractor_unit = random.randrange(2, 10)
+        subtractee_unit = random.randrange(1, subtractor_unit)
+
+        subtractee_tens = random.randrange(2, 9)
+        subtractor_tens = random.randrange(1, subtractee_tens)
+        
+        subtractee = subtractee_tens * 10 + subtractee_unit
+        subtractor = subtractor_tens * 10 + subtractor_unit
 
         return '{0} - {1}'.format(subtractee, subtractor)
 
