@@ -5,11 +5,18 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
     <title>Exercise</title>
+    <style>
+      .exercise-results.fullmarks {
+        background-color: rgb(122, 194, 122);
+      }
+    </style>
     <script>
 
       function evaluateExercise() {
-        var questions = $(".question")
-        
+        var questions = $(".question");
+        var mark_total = questions.length;
+        var mark_correct = 0;
+
         questions.each(function(index) {
           var question = $(this);
           var proposition = question.find(".proposition").val();
@@ -18,24 +25,40 @@
 
           if (proposition == answer) {
             result = "correct";
+            mark_correct++;
           }
 
-          question.find(".result").html(result);
+          question.find(".question-result").html(result);
         });
+
+        var result_el = $("<li class=\"exercise-mark\">");
+        result_el.html([ mark_correct, mark_total ].join(" / "));
+        if (mark_correct == mark_total)
+        {
+          result_el.addClass("fullmarks");
+        }
+
+        $(".exercise-results").append(result_el);
       }
     </script>
 </head>
 <body>
-    
+  <div class="exercise">
+    <input type="hidden" name="exercise_timestamp" value="{{ exercise.timestamp }}" />
   {% for question in exercise.questions %}
     <div class="question">
       <span>{{ question.expression }} = </span>
       <input type="text" name="{{ question.id }}" class="proposition" />
       <input type="hidden" value="{{ question.answer }}" class="answer" />
-      <span class="result"></span>
+      <span class="question-result"></span>
     </div>
   {% endfor %}
-  <button id="submit" onclick="evaluateExercise()">Submit</button>
+    <button id="submit" onclick="evaluateExercise()">Submit</button>
+  </div>
+
+  <ol class="exercise-results">
+  </ol>
+
   <script src="https://code.jquery.com/jquery-3.2.1.min.js"></script>
 </body>
 </html>

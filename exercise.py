@@ -1,3 +1,4 @@
+from datetime import datetime
 import random
 
 class SubtractionExerciseFactory:
@@ -24,6 +25,7 @@ class SubtractionExerciseFactory:
 
 class Exercise:
     def __init__(self):
+        self.timestamp = datetime.now()
         self.questions = []
 
 class Question:
