@@ -33,8 +33,8 @@ class SubtractionExerciseFactory:
         return '{0} - {1}'.format(subtractee, subtractor)
 
     def _generate_two_digit_expression(self):
-        subtractor_unit = random.randrange(2, 10)
-        subtractee_unit = random.randrange(1, subtractor_unit)
+        subtractor_unit = random.randrange(3, 10)
+        subtractee_unit = random.randrange(1, subtractor_unit - 1)
 
         subtractee_tens = random.randrange(2, 9)
         subtractor_tens = random.randrange(1, subtractee_tens)

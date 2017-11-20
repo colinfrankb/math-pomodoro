@@ -7,22 +7,31 @@
     <title>Exercise</title>
     <script src="https://code.jquery.com/jquery-3.2.1.min.js"></script>
     <style>
-      .exercise-results.fullmarks {
+      .exercise-mark.fullmarks {
         background-color: rgb(122, 194, 122);
       }
 
       .question {
         margin: 10px 0;        
       }
+
+      .correct {
+        color: rgb(122, 194, 122);
+      }
+
+      .wrong {
+        color: rgb(180, 36, 36);
+      }
     </style>
     <script>
 
       function loadPreviousExerciseMarks() {
         for (var i = 0; i < localStorage.length; i++){
-          var exercise_mark_jsonstring = localStorage.getItem(localStorage.key(i));
+          var exercise_timestamp = localStorage.key(i);
+          var exercise_mark_jsonstring = localStorage.getItem(exercise_timestamp);
           var exercise_mark = JSON.parse(exercise_mark_jsonstring);
 
-          renderExerciseMark(exercise_mark);
+          renderExerciseMark(exercise_timestamp, exercise_mark);
         }
       }
 
@@ -43,7 +52,7 @@
             mark_correct++;
           }
 
-          question.find(".question-result").html(result);
+          question.find(".question-result").addClass(result).html(result);
         });
 
         var exercise_mark = {
@@ -51,13 +60,24 @@
           "total": mark_total 
         };
 
-        renderExerciseMark(exercise_mark);
-
-        localStorage.setItem(exercise_timestamp, JSON.stringify(exercise_mark));
+        renderExerciseMark(exercise_timestamp, exercise_mark);
+        saveExerciseInLocalStorage(exercise_timestamp, exercise_mark);
       }
 
-      function renderExerciseMark(exercise_mark) {
+      function renderExerciseMark(exercise_timestamp, exercise_mark) {
+        var existing_rendered_exercise_mark_selector = 
+          [
+            "[data-exercise-timestamp='", 
+            exercise_timestamp, 
+            "']"
+          ].join("");
+
+        if ($(existing_rendered_exercise_mark_selector).length) {
+          return;
+        }
+
         var result_el = $("<li class=\"exercise-mark\">");
+        result_el.attr("data-exercise-timestamp", exercise_timestamp);
         result_el.html([ exercise_mark["correct"], exercise_mark["total"] ].join(" / "));
         if (exercise_mark["correct"] == exercise_mark["total"])
         {
@@ -66,9 +86,16 @@
         $(".exercise-results").append(result_el);
       }
 
+      function saveExerciseInLocalStorage(exercise_timestamp, exercise_mark) {
+        var existing_exercise_jsonstring = localStorage.getItem(exercise_timestamp);
+
+        if (!existing_exercise_jsonstring) {
+          localStorage.setItem(exercise_timestamp, JSON.stringify(exercise_mark));
+        }
+      }
+
       $(document).ready(function() {
         loadPreviousExerciseMarks();
-
       });
 
     </script>
