@@ -22,8 +22,14 @@
       .wrong {
         color: rgb(180, 36, 36);
       }
+
+      .expression {
+        display: none;
+      }
     </style>
     <script>
+      var secondsElapsed = 0;
+      var intervalId;
 
       function loadPreviousExerciseMarks() {
         for (var i = 0; i < localStorage.length; i++){
@@ -36,6 +42,7 @@
       }
 
       function evaluateExercise() {
+        clearInterval(intervalId);
         var exercise_timestamp = $("[name='exercise_timestamp']").val();
         var questions = $(".question");
         var mark_total = questions.length;
@@ -57,7 +64,8 @@
 
         var exercise_mark = {
           "correct": mark_correct,
-          "total": mark_total 
+          "total": mark_total,
+          "seconds_elapsed": secondsElapsed 
         };
 
         renderExerciseMark(exercise_timestamp, exercise_mark);
@@ -78,7 +86,8 @@
 
         var result_el = $("<li class=\"exercise-mark\">");
         result_el.attr("data-exercise-timestamp", exercise_timestamp);
-        result_el.html([ exercise_mark["correct"], exercise_mark["total"] ].join(" / "));
+        var mark = [ exercise_mark["correct"], exercise_mark["total"] ].join(" / ");
+        result_el.html(mark + " (" + getTimerText(exercise_mark["seconds_elapsed"]) + ") ");
         if (exercise_mark["correct"] == exercise_mark["total"])
         {
           result_el.addClass("fullmarks");
@@ -94,18 +103,46 @@
         }
       }
 
+      function startExercise() {
+        timer = $("#timer");
+
+        intervalId = setInterval(function() {
+          secondsElapsed++;
+          timer.html(getTimerText(secondsElapsed));
+        }, 1000);
+
+        $(".expression").show();
+      }
+
+      function getTimerText(secondsElapsed) {
+        var minutes = Math.floor(secondsElapsed / 60);
+        var seconds = Math.floor(secondsElapsed % 60);
+        
+        return minutes + "m " + seconds + "s ";
+      }
+
+      function pauseExercise() {
+
+      }
+
       $(document).ready(function() {
         loadPreviousExerciseMarks();
+        $("#timer").html(getTimerText(secondsElapsed));
       });
 
     </script>
 </head>
 <body>
+  <div class="exercise-timer">
+    <div id="timer"></div>
+    <button id="start_exercise" onclick="startExercise()">Start</button>
+    <button id="pause_exercise" onclick="pauseExercise()">Pause</button>
+  </div>
   <div class="exercise">
     <input type="hidden" name="exercise_timestamp" value="{{ exercise.timestamp }}" />
   {% for question in exercise.questions %}
     <div class="question">
-      <span>{{ question.expression }} = </span>
+      <span class="expression">{{ question.expression }}</span> = 
       <input type="text" name="{{ question.id }}" class="proposition" />
       <input type="hidden" value="{{ question.answer }}" class="answer" />
       <span class="question-result"></span>
