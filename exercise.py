@@ -5,7 +5,7 @@ class SubtractionExerciseFactory:
     def generate(self):
         subtraction_exercise = Exercise()
 
-        for id in range(10, 40):
+        for id in range(10, 30):
             expression = self._generate_two_digit_expression()
             question = Question(
                 id=id,
@@ -14,14 +14,14 @@ class SubtractionExerciseFactory:
             )
             subtraction_exercise.questions.append(question)
 
-        # for id in range(0, 10):
-        #     expression = self._generate_expression()
-        #     question = Question(
-        #         id=id,
-        #         expression=expression,
-        #         answer=eval(expression)
-        #     )
-        #     subtraction_exercise.questions.append(question)
+        for id in range(31, 41):
+            expression = self._generate_expression()
+            question = Question(
+                id=id,
+                expression=expression,
+                answer=eval(expression)
+            )
+            subtraction_exercise.questions.append(question)
 
         return subtraction_exercise
 
