@@ -7,6 +7,11 @@
     <title>Exercise</title>
     <script src="https://code.jquery.com/jquery-3.2.1.min.js"></script>
     <style>
+      .exercise {
+        display: flex;
+        flex-direction: column;
+      }
+
       .exercise-mark.fullmarks {
         background-color: rgb(122, 194, 122);
       }
@@ -148,8 +153,8 @@
       <span class="question-result"></span>
     </div>
   {% endfor %}
-    <button id="submit" onclick="evaluateExercise()">Submit</button>
   </div>
+  <button id="submit" onclick="evaluateExercise()">Submit</button>
 
   <ol class="exercise-results">
   </ol>
