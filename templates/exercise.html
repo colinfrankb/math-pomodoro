@@ -145,14 +145,14 @@
   </div>
   <div class="exercise">
     <input type="hidden" name="exercise_timestamp" value="{{ exercise.timestamp }}" />
-  {% for question in exercise.questions %}
+    {% for question in exercise.questions %}
     <div class="question">
       <span class="expression">{{ question.expression }}</span> = 
       <input type="text" name="{{ question.id }}" class="proposition" />
       <input type="hidden" value="{{ question.answer }}" class="answer" />
       <span class="question-result"></span>
     </div>
-  {% endfor %}
+    {% endfor %}
   </div>
   <button id="submit" onclick="evaluateExercise()">Submit</button>
 

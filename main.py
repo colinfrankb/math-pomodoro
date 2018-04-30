@@ -1,18 +1,21 @@
 from flask import Flask, render_template, request
 
-from factories import MultiplicationExerciseFactory, SubtractionEquationsFactory
+from factories import MultiplicationEquationsFactory, SubtractionEquationsFactory
+from models import Exercise
 
 app = Flask(__name__)
 
 @app.route('/')
 def generate_exercise():
-    subtraction_exercise_factory = SubtractionEquationsFactory()
-    multiplication_exercise_factory = MultiplicationExerciseFactory()
+    subtraction_equations_factory = SubtractionEquationsFactory()
+    multiplication_equations_factory = MultiplicationEquationsFactory()
     
-    subtraction_exercise = subtraction_exercise_factory.generate()
-    multiplication_exercise = multiplication_exercise_factory.generate()
+    exercise = Exercise()
+
+    subtraction_equations_factory.appendTo(exercise)
+    multiplication_equations_factory.appendTo(exercise)
     
-    return render_template('exercise.html', exercise=multiplication_exercise)
+    return render_template('exercise.html', exercise=exercise)
 
 @app.route('/pomodoro')
 def evaluate_exercise():

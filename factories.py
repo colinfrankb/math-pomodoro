@@ -3,9 +3,7 @@ import random
 from models import *
 
 class SubtractionEquationsFactory:
-    def generate(self):
-        subtraction_exercise = Exercise()
-
+    def appendTo(self, exercise):
         for id in range(10, 30):
             expression = self._generate_two_digit_expression()
             question = Question(
@@ -13,7 +11,7 @@ class SubtractionEquationsFactory:
                 expression=expression,
                 answer=eval(expression)
             )
-            subtraction_exercise.questions.append(question)
+            exercise.questions.append(question)
 
         for id in range(31, 41):
             expression = self._generate_expression()
@@ -22,9 +20,7 @@ class SubtractionEquationsFactory:
                 expression=expression,
                 answer=eval(expression)
             )
-            subtraction_exercise.questions.append(question)
-
-        return subtraction_exercise
+            exercise.questions.append(question)
 
     def _generate_expression(self):
         subtractor = random.randrange(200, 1000)
@@ -45,10 +41,8 @@ class SubtractionEquationsFactory:
 
         return '{0} - {1}'.format(subtractee, subtractor)
 
-class MultiplicationExerciseFactory:
-    def generate(self):
-        multiplication_exercise = Exercise()
-
+class MultiplicationEquationsFactory:
+    def appendTo(self, exercise):
         for id in range(10, 30):
             expression = self._generate_two_digit_expression()
             question = Question(
@@ -56,9 +50,7 @@ class MultiplicationExerciseFactory:
                 expression=expression,
                 answer=eval(expression)
             )
-            multiplication_exercise.questions.append(question)
-
-        return multiplication_exercise
+            exercise.questions.append(question)
 
     def _generate_two_digit_expression(self):
         first_number = random.randrange(10, 100)
