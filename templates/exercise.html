@@ -148,7 +148,7 @@
     {% for question in exercise.questions %}
     <div class="question">
       <span class="expression">{{ question.expression }}</span> = 
-      <input type="text" name="{{ question.id }}" class="proposition" />
+      <input type="number" name="{{ question.id }}" class="proposition" />
       <input type="hidden" value="{{ question.answer }}" class="answer" />
       <span class="question-result"></span>
     </div>
