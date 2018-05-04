@@ -9,7 +9,7 @@ class SubtractionEquationsFactory:
             question = Question(
                 id=id,
                 expression=expression,
-                answer=eval(expression)
+                answer=eval(str(expression))
             )
             exercise.questions.append(question)
 
@@ -18,7 +18,7 @@ class SubtractionEquationsFactory:
             question = Question(
                 id=id,
                 expression=expression,
-                answer=eval(expression)
+                answer=eval(str(expression))
             )
             exercise.questions.append(question)
 
@@ -27,7 +27,7 @@ class SubtractionEquationsFactory:
         low_hundred = random.randrange(subtractor)
         subtractee = random.randrange(1,10) * 1000 + low_hundred
 
-        return '{0} - {1}'.format(subtractee, subtractor)
+        return Expression(subtractee, subtractor, '-')
 
     def _generate_two_digit_expression(self):
         subtractor_unit = random.randrange(3, 10)
@@ -39,7 +39,7 @@ class SubtractionEquationsFactory:
         subtractee = subtractee_tens * 10 + subtractee_unit
         subtractor = subtractor_tens * 10 + subtractor_unit
 
-        return '{0} - {1}'.format(subtractee, subtractor)
+        return Expression(subtractee, subtractor, '-')
 
 class MultiplicationEquationsFactory:
     def appendTo(self, exercise):
@@ -48,7 +48,7 @@ class MultiplicationEquationsFactory:
             question = Question(
                 id=id,
                 expression=expression,
-                answer=eval(expression)
+                answer=eval(str(expression))
             )
             exercise.questions.append(question)
 
@@ -56,4 +56,4 @@ class MultiplicationEquationsFactory:
         first_number = random.randrange(10, 100)
         second_number = random.randrange(2, 10)
 
-        return '{0} * {1}'.format(first_number, second_number)
+        return Expression(first_number, second_number, '*')
