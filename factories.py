@@ -34,7 +34,8 @@ class SubtractionEquationsFactory:
         subtractee_unit = random.randrange(1, subtractor_unit - 1)
 
         subtractee_tens = random.randrange(2, 9)
-        subtractor_tens = random.randrange(1, subtractee_tens)
+        subtractor_extra_tens = 1 if subtractee_tens >= 3 else 0
+        subtractor_tens = random.randrange(1, subtractee_tens - subtractor_extra_tens)
         
         subtractee = subtractee_tens * 10 + subtractee_unit
         subtractor = subtractor_tens * 10 + subtractor_unit
