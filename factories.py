@@ -58,3 +58,20 @@ class MultiplicationEquationsFactory:
         second_number = random.randrange(2, 10)
 
         return Expression(first_number, second_number, '*')
+
+class TwoDigitMultiplicationEquationsFactory:
+    def appendTo(self, exercise):
+        for id in range(10, 30):
+            expression = self._generate_two_digit_expression()
+            question = Question(
+                id=id,
+                expression=expression,
+                answer=eval(str(expression))
+            )
+            exercise.questions.append(question)
+
+    def _generate_two_digit_expression(self):
+        first_number = random.randrange(10, 100)
+        second_number = random.randrange(10, 100)
+
+        return Expression(first_number, second_number, '*')
