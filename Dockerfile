@@ -1,4 +1,4 @@
-FROM python:latest
+FROM python:3.7.0-windowsservercore-1709
 
 WORKDIR /math-pomodoro
 
@@ -12,3 +12,6 @@ EXPOSE 5001
 ENV FLASK_APP main.py
 
 ENTRYPOINT ["python", "-m", "flask", "run", "-h", "0.0.0.0", "-p", "5001"]
+
+# docker build -t math-pomodoro:latest .
+# docker run -d -p 5001:5001 math-pomodoro:latest
