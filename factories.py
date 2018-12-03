@@ -61,7 +61,7 @@ class MultiplicationEquationsFactory:
 
 class TwoDigitMultiplicationEquationsFactory:
     def appendTo(self, exercise):
-        for id in range(10, 30):
+        for id in range(10, 15):
             expression = self._generate_two_digit_expression()
             question = Question(
                 id=id,
