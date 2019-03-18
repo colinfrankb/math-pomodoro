@@ -75,3 +75,20 @@ class TwoDigitMultiplicationEquationsFactory:
         second_number = random.randrange(10, 100)
 
         return Expression(first_number, second_number, '*')
+
+class DivisionEquationsFactory:
+    def appendTo(self, exercise):
+        for id in range(1, 10):
+            expression = self._generate_three_digit_expression()
+            question = Question(
+                id=id,
+                expression=expression,
+                answer=eval(str(expression))
+            )
+            exercise.questions.append(question)
+
+    def _generate_three_digit_expression(self):
+        first_number = random.randrange(100, 1000)
+        second_number = random.randrange(2, 10)
+
+        return Expression(first_number, second_number, '/')
