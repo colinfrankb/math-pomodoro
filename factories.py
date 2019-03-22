@@ -76,14 +76,14 @@ class TwoDigitMultiplicationEquationsFactory:
 
         return Expression(first_number, second_number, '*')
 
-class DivisionEquationsFactory:
+class RoundedDivisionEquationsFactory:
     def appendTo(self, exercise):
         for id in range(1, 10):
             expression = self._generate_three_digit_expression()
             question = Question(
                 id=id,
                 expression=expression,
-                answer=eval(str(expression))
+                answer=round(eval(str(expression)))
             )
             exercise.questions.append(question)
 
