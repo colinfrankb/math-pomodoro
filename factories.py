@@ -83,7 +83,7 @@ class RoundedDivisionEquationsFactory:
             question = Question(
                 id=id,
                 expression=expression,
-                answer=round(eval(str(expression)))
+                answer=int(eval(str(expression)))
             )
             exercise.questions.append(question)
 
