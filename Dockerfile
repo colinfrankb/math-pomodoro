@@ -1,4 +1,4 @@
-FROM python:3.7.0-windowsservercore-1709
+FROM python:3.7.3-stretch
 
 WORKDIR /math-pomodoro
 
