@@ -1,6 +1,12 @@
 from flask import Flask, render_template, request
 
-from factories import MultiplicationEquationsFactory, SubtractionEquationsFactory, TwoDigitMultiplicationEquationsFactory, RoundedDivisionEquationsFactory
+from factories import (
+    MultiplicationEquationsFactory, 
+    SubtractionEquationsFactory, 
+    TwoDigitMultiplicationEquationsFactory, 
+    RoundedDivisionEquationsFactory,
+    PercentageEquationsFactory
+)
 from models import Exercise
 
 app = Flask(__name__)
@@ -34,6 +40,16 @@ def generate_division_exercise():
     exercise = Exercise()
 
     three_digit_rounded_division_equations_factory.appendTo(exercise)
+    
+    return render_template('exercise.html', exercise=exercise)
+
+@app.route('/percentage')
+def generate_percentage_exercise():
+    percentage_equations_factory = PercentageEquationsFactory()
+    
+    exercise = Exercise()
+
+    percentage_equations_factory.appendTo(exercise)
     
     return render_template('exercise.html', exercise=exercise)
 
